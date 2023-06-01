@@ -32,18 +32,15 @@
 
         // 2) Напишите функцию createCounter, которая создает счетчик и возвращает объект с двумя методами: increment и decrement.Метод increment должен увеличивать значение счетчика на 1, а метод decrement должен уменьшать значение счетчика на 1. Значение счетчика должно быть доступно только через методы объекта, а не напрямую.
 
-        function createCounter() {
+        const createCounter = () => {
             let count = 0;
 
             return {
-                increment: function () {
-                    return ++count;
-                },
-                decrement: function () {
-                    return --count;
-                }
+                increment: () => ++count,
+                decrement: () => --count,
             };
-        }
+        };
+
 
         const counter = createCounter();
 
@@ -57,8 +54,8 @@
         // 3) Напишите рекурсивную функцию findElementByClass, которая принимает корневой элемент дерева DOM и название класса в качестве аргументов и возвращает первый найденный элемент с указанным классом в этом дереве.
 
         function findElementByClass(rootEl, className) {
-            if (rootEl.classList && rootElement.classList.contains(className)) {
-                return rootElement;
+            if (rootEl.classList && rootEl.classList.contains(className)) {
+                return rootEl;
             }
 
             const children = rootEl.children;
