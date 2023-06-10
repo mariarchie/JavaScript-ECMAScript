@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="myElement">
+        <div class="my-class">1st element</div>
+    </div>
+    <script>
+        //1. Получение данных о пользователе
+        // Реализуйте функцию getUserData, которая принимает идентификатор пользователя (ID) в качестве аргумента и использует fetch для получения данных о пользователе с заданным ID с удаленного сервера. Функция должна возвращать промис, который разрешается с данными о пользователе в виде объекта. Если пользователь с указанным ID не найден, промис должен быть отклонен с соответствующим сообщением об ошибке.
+        // Подсказка, с последовательностью действий: 
+        // getUserData использует fetch для получения данных о пользователе с удаленного сервера. Если запрос успешен (с кодом 200), функция извлекает данные из ответа с помощью response.json() и возвращает объект с данными о пользователе. Если запрос неуспешен, функция отклоняет промис с сообщением об ошибке.
+
+        function getUserData(ID) {
+            return fetch(`https://api.example.com/${ID}`)
+                .then(response => {
+                    if (response.status === 200) {
+                        return response.json();
+                    } else {
+                        throw new Error('User is not found');
+                    }
+                });
+        }
+
+        // Отправка данных на сервер
+        // Реализуйте функцию saveUserData, которая принимает объект с данными о пользователе в качестве аргумента и использует fetch для       отправки этих данных на удаленный сервер для сохранения.Функция должна возвращать промис, который разрешается, если данные      успешно отправлены, или отклоняется в случае ошибки.
+
+        function saveUserData(userData) {
+            return new Promise((resolve, reject) => {
+                const url = 'https://api.example.com/users';
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(userData),
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            resolve();
+                        } else {
+                            throw new Error('Failed to save user data');
+                        }
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
+            });
+        }
+
+
+        const user = {
+            name: 'John Smith',
+            age: 30,
+            email: 'john@example.com'
+        };
+        saveUserData(user)
+            .then(() => {
+                console.log('User data saved successfully');
+            })
+            .catch(error => {
+                console.log(error.message);
+            });
+
+
+        // 3. Изменение стиля элемента через заданное время
+        // Напишите функцию changeStyleDelayed, которая принимает идентификатор элемента и время задержки (в миллисекундах) в качестве аргументов. Функция должна изменить стиль элемента через указанное время.
+
+        function changeStyleDelayed(elementId, delay) {
+            setTimeout(() => {
+                const element = document.getElementById(elementId);
+                if (element) {
+                    element.style.backgroundColor = 'green';
+                    element.style.color = 'white';
+                    element.style.border = '2px solid black';
+                }
+            }, delay);
+        }
+
+        changeStyleDelayed('myElement', 2000); 
+
+
+    </script>
+</body>
+
+</html>
